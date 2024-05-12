@@ -72,11 +72,18 @@ class _HomeState extends State<Home> {
                   child: Row(
                     children: [
                       const Expanded(
-                        flex: 2,
+                        flex: 8,
                         child: SearchBar(
+                          leading: Icon(Icons.search),
                           hintText: 'Search by name',
                         ),
                       ),
+                      Expanded(
+                          flex: 1,
+                          child: Card(
+                              child: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.filter_alt))))
 
                       // Expanded(
                       //   child: SearchBar(
