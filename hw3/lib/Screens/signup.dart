@@ -40,6 +40,14 @@ class _SignupState extends State<Signup> {
         );
         return authResult.user;
       } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Login unsuccesful"),
+          backgroundColor: Colors.red,
+        ));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Login unsuccesful"),
+          backgroundColor: Colors.red,
+        ));
         return null;
       }
     } catch (error) {

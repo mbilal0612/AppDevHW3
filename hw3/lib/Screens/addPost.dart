@@ -46,7 +46,7 @@ class _AddPostState extends State<AddPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Posts"),
+        title: const Text("Add Posts"),
       ),
       body: SingleChildScrollView(
           child: Center(
