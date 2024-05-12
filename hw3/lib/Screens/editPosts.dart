@@ -3,42 +3,49 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hw3/Screens/home.dart';
 
-class AddPost extends StatefulWidget {
+class EditPost extends StatefulWidget {
   final UserCredential user;
-  const AddPost({super.key, required this.user});
+  final data;
+  const EditPost({super.key, required this.user, required this.data});
 
   @override
-  _AddPostState createState() => _AddPostState();
+  _EditPostState createState() => _EditPostState();
 }
 
-class _AddPostState extends State<AddPost> {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final TextEditingController nameController = TextEditingController();
-  var titleController = TextEditingController();
-  var descController = TextEditingController();
-
-  void _addPost() async {
-    print(widget.user);
-    try {
-      await firestore.collection('posts').add({
-        'name': '${widget.user.user?.displayName}',
-        'title': titleController.text,
-        'desc': descController.text,
-        'createdAt': DateTime.now(),
-        'profilepic': '${widget.user.user?.photoURL}',
-        'createdBy': '',
-      });
-      print('Data added successfully!');
-    } catch (e) {
-      print('Error adding data: $e');
-    }
-  }
-
+class _EditPostState extends State<EditPost> {
   @override
   Widget build(BuildContext context) {
+    var snapshot = widget.data.data();
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final TextEditingController nameController = TextEditingController();
+    var titleController = TextEditingController(text: snapshot['title']);
+    var descController = TextEditingController(text: snapshot['desc']);
+
+    void _EditPost() async {
+      print(widget.user);
+      try {
+        await firestore.collection('posts').doc(widget.data.id).update({
+          'name': '${widget.user.user?.displayName}',
+          'title': titleController.text,
+          'desc': descController.text,
+          'createdAt': DateTime.now(),
+          'profilepic': '${widget.user.user?.photoURL}',
+          'createdBy': '',
+        });
+        print('Data added successfully!');
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => Home(user: widget.user)),
+            (route) => false);
+      } catch (e) {
+        print('Error adding data: $e');
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Posts"),
+        title: const Text("Edit Post"),
       ),
       body: SingleChildScrollView(
           child: Center(
@@ -80,7 +87,7 @@ class _AddPostState extends State<AddPost> {
             //           border: OutlineInputBorder(),
             //           labelText: 'Description',
             //         ))),
-            ElevatedButton(onPressed: _addPost, child: const Text("Submit")),
+            ElevatedButton(onPressed: _EditPost, child: const Text("Submit")),
           ],
         ),
       ))),

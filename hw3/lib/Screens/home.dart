@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hw3/Screens/addPost.dart';
+import 'package:hw3/Screens/editPosts.dart';
 
 class Home extends StatefulWidget {
   final UserCredential user;
@@ -101,7 +102,9 @@ class _HomeState extends State<Home> {
                     child: ListView.builder(
                         itemCount: snapshot.data!.size,
                         itemBuilder: (BuildContext context, int index) {
-                          return PostDetails(data: snapshot.data!.docs[index]);
+                          return PostDetails(
+                              data: snapshot.data!.docs[index],
+                              user: widget.user);
                         }))
               ],
               // ),
@@ -129,7 +132,8 @@ class _HomeState extends State<Home> {
 
 class PostDetails extends StatelessWidget {
   final data;
-  const PostDetails({super.key, required this.data});
+  final user;
+  const PostDetails({super.key, required this.data, required this.user});
 
   static String? time(DateTime date) {
     final now = DateTime.now();
@@ -164,6 +168,11 @@ class PostDetails extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print('data: ${data.id}');
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EditPost(user: user, data: data)),
+            (route) => false);
       },
       child: Column(
         children: [
