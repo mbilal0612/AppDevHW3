@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hw3/Screens/addPost.dart';
 import 'package:hw3/Screens/home.dart';
 import 'package:hw3/Screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,7 +7,9 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
