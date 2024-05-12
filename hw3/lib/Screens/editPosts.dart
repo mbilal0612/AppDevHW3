@@ -20,6 +20,7 @@ class _EditPostState extends State<EditPost> {
     final TextEditingController nameController = TextEditingController();
     var titleController = TextEditingController(text: snapshot['title']);
     var descController = TextEditingController(text: snapshot['desc']);
+    var _scaffoldKey = GlobalKey<ScaffoldState>();
 
     void _EditPost() async {
       print(widget.user);
@@ -32,18 +33,34 @@ class _EditPostState extends State<EditPost> {
           'profilepic': '${widget.user.user?.photoURL}',
           'createdBy': '',
         });
-        print('Data added successfully!');
+
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Data editted Sucessfully"),
+          backgroundColor: Colors.green,
+        ));
+        // _(
+        //   const SnackBar(
+        //     content: Text("Data added Sucessfully"),
+        //     backgroundColor: Colors.green,
+        //   ),
+        // );
+        print('Data edited successfully!');
 
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => Home(user: widget.user)),
             (route) => false);
       } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("There was an error"),
+          backgroundColor: Colors.red,
+        ));
         print('Error adding data: $e');
       }
     }
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Text("Edit Post"),
       ),

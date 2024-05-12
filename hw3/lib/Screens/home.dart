@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("posts")
-            // .orderBy("createdAt", descending: true)
+            .orderBy("createdAt", descending: true)
             .snapshots(),
         builder: ((context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -71,22 +71,29 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.all(8),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
+                        flex: 2,
                         child: SearchBar(
-                          leading: const Icon(Icons.search),
-                          hintText: "Search by name",
-                          trailing: [const Icon(Icons.close)],
-                          elevation: MaterialStateProperty.all(1),
-                          shape: MaterialStateProperty.all<OutlinedBorder>(
-                            RoundedRectangleBorder(
-                              side: const BorderSide(
-                                color: Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
+                          hintText: 'Search by name',
                         ),
-                      )
+                      ),
+
+                      // Expanded(
+                      //   child: SearchBar(
+                      //     leading: const Icon(Icons.search),
+                      //     hintText: "Search by name",
+                      //     trailing: [const Icon(Icons.close)],
+                      //     elevation: MaterialStateProperty.all(1),
+                      //     shape: MaterialStateProperty.all<OutlinedBorder>(
+                      //       RoundedRectangleBorder(
+                      //         side: const BorderSide(
+                      //           color: Colors.transparent,
+                      //         ),
+                      //         borderRadius: BorderRadius.circular(10.0),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -178,7 +185,7 @@ class PostDetails extends StatelessWidget {
         children: [
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -210,7 +217,28 @@ class PostDetails extends StatelessWidget {
                     // Column(children: )
                   ]),
             ),
-          )
+          ),
+          const SizedBox(
+            height: 1,
+          ),
+          Padding(
+            padding: EdgeInsets.all(0),
+            child: Card(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.favorite_rounded)),
+                  IconButton(
+                      onPressed: () {}, icon: const Icon(Icons.heart_broken)),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.comment_rounded)),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

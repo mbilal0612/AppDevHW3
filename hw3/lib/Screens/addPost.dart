@@ -28,8 +28,16 @@ class _AddPostState extends State<AddPost> {
         'profilepic': '${widget.user.user?.photoURL}',
         'createdBy': '',
       });
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Data Added Sucessfully"),
+        backgroundColor: Colors.green,
+      ));
       print('Data added successfully!');
     } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("There was an error"),
+        backgroundColor: Colors.red,
+      ));
       print('Error adding data: $e');
     }
   }
